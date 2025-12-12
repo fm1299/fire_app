@@ -13,15 +13,21 @@ import 'websocket_service.dart';
 class HomeScreen extends StatefulWidget {
   final WebSocketService webSocketService;
   final CameraDescription? camera;
+  final ApiService apiService;
 
-  const HomeScreen({super.key, required this.webSocketService, this.camera});
+  const HomeScreen({
+    super.key,
+    required this.webSocketService,
+    this.camera,
+    required this.apiService,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final ApiService _apiService = ApiService();
+  late final ApiService _apiService;
   final ImagePicker _picker = ImagePicker();
   final AudioRecorder _audioRecorder = AudioRecorder();
   final AudioPlayer _audioPlayer = AudioPlayer();
@@ -39,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _apiService = widget.apiService;
     _initializeCamera();
     _listenToWebSocket();
   }
